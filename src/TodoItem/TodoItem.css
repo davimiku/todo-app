@@ -1,0 +1,13 @@
+.todo-item {
+    border: 1px solid white;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.overdue {
+    background-color: red;
+}
+
+.complete {
+    background-color: green;
+}
