@@ -21,10 +21,12 @@ cd todo-app
 npm install
 ```
 
-3. Run tests
+3. Create an `.env` file at the root of the repository, i.e. at the same level as the "package.json"
 
-```sh
-npm run test
+Add the API key in this file using the `key=value` syntax where the key is `VITE_API_KEY`.
+
+```ini
+VITE_API_KEY=<api-key>
 ```
 
 4. Run the application in the development server
