@@ -39,7 +39,7 @@ npm run dev
 
 - Language: TypeScript
 - Framework: React
-- Testing: Vitest
 - Build Tooling: Vite
 - Linting: ESLint
 - Formatting: Prettier
+- Additional libraries: Zod (data parsing/validation)
