@@ -1,13 +1,26 @@
 .todo-item {
-    border: 1px solid white;
-    padding: 1rem;
-    margin: 1rem;
+  display: flex;
+
+  width: 100%;
+  border: 1px solid CanvasText;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.description-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .overdue {
-    background-color: red;
+  background-color: rgba(255, 0, 0, 0.5);
 }
 
 .complete {
-    background-color: green;
+  background-color: rgba(0, 255, 0, 0.25);
+}
+
+.checkbox {
+  margin-right: 1rem;
 }

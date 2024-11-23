@@ -1,3 +1,5 @@
+import { Spinner } from '../Spinner/Spinner'
+import { isOverdue } from '../TodoItemList/useTodoItems'
 import './TodoItem.css'
 
 export type TodoItemProps = {
@@ -5,21 +7,65 @@ export type TodoItemProps = {
   description: string
   isComplete: boolean
   dueDate: string | null
+  dueDateLabel: string
+  isLoading: boolean
+  onToggle: (id: string) => void
 }
 
-export function TodoItem({ description, isComplete, dueDate }: TodoItemProps) {
+export function TodoItem({
+  description,
+  isComplete,
+  dueDate,
+  id,
+  dueDateLabel,
+  isLoading,
+  onToggle,
+}: TodoItemProps) {
+  let actionElement: JSX.Element
+  if (isLoading) {
+    actionElement = <Spinner />
+  } else {
+    const ariaLabel = isComplete
+      ? `Mark '${description}' as not done`
+      : `Mark '${description}' as done`
+    actionElement = (
+      <input
+        className='checkbox'
+        type='checkbox'
+        checked={isComplete}
+        onChange={() => onToggle(id)}
+        aria-label={ariaLabel}
+      />
+    )
+  }
+
   return (
-    <div className='todo-item'>
-      <input type='checkbox' checked={isComplete} />
-      <span>{description}</span> <TodoItemDueDate dueDate={dueDate} />
+    <div className={className(dueDate, isComplete)}>
+      {actionElement}
+      <div className='description-container'>
+        <span>{description}</span>{' '}
+        <TodoItemDueDate dueDate={dueDate} dueDateLabel={dueDateLabel} />
+      </div>
     </div>
   )
 }
 
-function TodoItemDueDate({ dueDate }: { dueDate: string | null }) {
-  if (!dueDate) return
+function TodoItemDueDate({
+  dueDate,
+  dueDateLabel,
+}: Pick<TodoItemProps, 'dueDate' | 'dueDateLabel'>) {
+  if (!dueDate) return ''
 
-  const localizedDate = new Date(dueDate).toLocaleDateString()
+  return <time dateTime={dueDate}>{dueDateLabel}</time>
+}
 
-  return <time dateTime={dueDate}>{localizedDate}</time>
+function className(dueDate: string | null, isComplete: boolean) {
+  const base = 'todo-item'
+  if (isComplete) {
+    return base + ' complete'
+  }
+  if (isOverdue(dueDate, isComplete)) {
+    return base + ' overdue'
+  }
+  return base
 }
