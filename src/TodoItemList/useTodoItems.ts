@@ -88,10 +88,7 @@ function byOverdueStatus(a: TodoItem, b: TodoItem): number {
   return 0
 }
 
-export function isOverdue(
-  dueDate: string | null,
-  isComplete: boolean
-): boolean {
+function isOverdue(dueDate: string | null, isComplete: boolean): boolean {
   if (!dueDate || isComplete) return false
 
   const today = new Date()

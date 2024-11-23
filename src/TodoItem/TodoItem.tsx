@@ -1,5 +1,4 @@
 import { Spinner } from '../Spinner/Spinner'
-import { isOverdue } from '../TodoItemList/useTodoItems'
 import './TodoItem.css'
 
 export type TodoItemProps = {
@@ -9,6 +8,7 @@ export type TodoItemProps = {
   dueDate: string | null
   dueDateLabel: string
   isLoading: boolean
+  isOverdue: boolean
   onToggle: (id: string) => void
 }
 
@@ -19,6 +19,7 @@ export function TodoItem({
   id,
   dueDateLabel,
   isLoading,
+  isOverdue,
   onToggle,
 }: TodoItemProps) {
   let actionElement: JSX.Element
@@ -40,10 +41,12 @@ export function TodoItem({
   }
 
   return (
-    <div className={className(dueDate, isComplete)}>
+    <div className={className(isComplete, isOverdue)}>
       {actionElement}
       <div className='description-container'>
-        <span>{description}</span>{' '}
+        <span>
+          {description} {isOverdue ? '(overdue)' : ''}
+        </span>
         <TodoItemDueDate dueDate={dueDate} dueDateLabel={dueDateLabel} />
       </div>
     </div>
@@ -59,12 +62,12 @@ function TodoItemDueDate({
   return <time dateTime={dueDate}>{dueDateLabel}</time>
 }
 
-function className(dueDate: string | null, isComplete: boolean) {
+function className(isComplete: boolean, isOverdue: boolean) {
   const base = 'todo-item'
   if (isComplete) {
     return base + ' complete'
   }
-  if (isOverdue(dueDate, isComplete)) {
+  if (isOverdue) {
     return base + ' overdue'
   }
   return base
